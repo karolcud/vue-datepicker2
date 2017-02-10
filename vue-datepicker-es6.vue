@@ -314,7 +314,11 @@ table {
 <template>
   <div class="cov-vue-date" :class="option.wrapperClass ? option.wrapperClass : {}">
     <div class="datepickbox">
-      <input type="text" title="input date" class="cov-datepicker" readonly="readonly" :placeholder="option.placeholder" v-model="date.time" :required="required" @click="showCheck" @focus="showCheck" :style="option.inputStyle ? option.inputStyle : {}" :class="option.inputClass ? option.inputClass : {}" />
+      <input type="text" title="input date" class="cov-datepicker" readonly="readonly"
+        :placeholder="option.placeholder" v-model="date.time" :required="required"
+        @click="showCheck" @focus="showCheck"
+        :style="option.inputStyle ? option.inputStyle : {}"
+        :class="option.inputClass ? option.inputClass : {}" />
     </div>
     <div class="datepicker-overlay" v-if="showInfo.check" @click="dismiss($event)" v-bind:style="{'background' : option.overlayOpacity? 'rgba(0,0,0,'+option.overlayOpacity+')' : 'rgba(0,0,0,0.5)'}">
       <div class="cov-date-body" :style="{'background-color': option.color ? option.color.header : '#3f51b5'}">
@@ -334,12 +338,14 @@ table {
                 <li v-for="weekie in library.week">{{weekie}}</li>
               </ul>
             </div>
-            <div class="day" v-for="day,index in dayList" :key="index" @click="checkDay(day)" :class="{'checked':day.checked,'unavailable':day.unavailable,'passive-day': !(day.inMonth)}" :style="day.checked ? (option.color && option.color.checkedDay ? { background: option.color.checkedDay } : { background: '#F50057' }) : {}">{{day.value}}</div>
+            <div class="day" v-for="day,index in dayList" :key="index"
+              @click="checkDay(day)" :class="{'checked':day.checked,'unavailable':day.unavailable,'passive-day': !(day.inMonth)}" :style="day.checked ? (option.color && option.color.checkedDay ? { background: option.color.checkedDay } : { background: '#F50057' }) : {}">{{day.value}}</div>
           </div>
         </div>
         <div class="cov-date-box list-box" v-if="showInfo.year">
           <div class="cov-picker-box date-list" id="yearList">
-            <div class="date-item" v-for="yearItem,index in library.year" :key="index" @click="setYear(yearItem)">{{yearItem}}</div>
+            <div class="date-item" v-for="yearItem,index in library.year" :key="index"
+              @click="setYear(yearItem)">{{yearItem}}</div>
           </div>
         </div>
         <div class="cov-date-box list-box" v-if="showInfo.month">
@@ -373,6 +379,7 @@ table {
 </template>
 <script>
 import moment from 'moment'
+
 export default {
   props: {
     required: false,
@@ -479,6 +486,7 @@ export default {
       selectedDays: []
     }
   },
+
   methods: {
     pad (n) {
       n = Math.floor(n)
@@ -490,7 +498,7 @@ export default {
       this.showDay(next)
     },
     showDay (time) {
-      if (time === undefined || !Date.parse(time)) {
+      if (time === undefined || !moment(time, this.option.format).isValid()) {
         this.checked.currentMoment = moment()
       } else {
         this.checked.currentMoment = moment(time, this.option.format)
@@ -527,7 +535,7 @@ export default {
       if (firstDay === 0) firstDay = 7
       for (let i = 0; i < firstDay - (this.option.SundayFirst ? 0 : 1); i++) {
         let passiveDay = {
-          value: previousMonth.daysInMonth() - (i),
+          value: previousMonth.daysInMonth() - i,
           inMonth: false,
           action: 'previous',
           unavailable: false,
@@ -570,7 +578,7 @@ export default {
       })
     },
     limitWeekDay (limit, days) {
-      days.map((day) => {
+      days.map(day => {
         if (limit.available.indexOf(Math.floor(day.moment.format('d'))) === -1) {
           day.unavailable = true
         }
@@ -579,7 +587,7 @@ export default {
     },
     limitFromTo (limit, days) {
       if (limit.from || limit.to) {
-        days.map((day) => {
+        days.map(day => {
           if (this.getLimitCondition(limit, day)) {
             day.unavailable = true
           }
@@ -588,7 +596,7 @@ export default {
       return days
     },
     getLimitCondition (limit, day) {
-      let tmpMoment = moment(day.moment.year() + '-' + this.pad(day.moment.month()+1) + '-' + this.pad(day.value))
+      let tmpMoment = moment(day.moment.year() + '-' + this.pad(day.moment.month() + 1) + '-' + this.pad(day.value))
       if (limit.from && !limit.to) {
         return !tmpMoment.isAfter(limit.from)
       } else if (!limit.from && limit.to) {
@@ -601,11 +609,11 @@ export default {
       if (obj.unavailable || obj.value === '') {
         return false
       }
-      if (!(obj.inMonth)) {
+      if (!obj.inMonth) {
         this.nextMonth(obj.action)
       }
       if (this.option.type === 'day' || this.option.type === 'min') {
-        this.dayList.forEach((x) => {
+        this.dayList.forEach(x => {
           x.checked = false
         })
         this.checked.day = this.pad(obj.value)
@@ -627,7 +635,7 @@ export default {
           break
         case 'min':
           this.showOne('hour')
-            // shift activated time items to visible position.
+          // shift activated time items to visible position.
           this.shiftActTime()
           break
       }
@@ -643,7 +651,7 @@ export default {
       this.showOne('year')
       this.$nextTick(() => {
         let listDom = document.getElementById('yearList')
-        listDom.scrollTop = (listDom.scrollHeight - 100)
+        listDom.scrollTop = listDom.scrollHeight - 100
         this.addYear()
       })
     },
@@ -685,7 +693,7 @@ export default {
     },
     addYear () {
       let listDom = document.getElementById('yearList')
-      listDom.addEventListener('scroll', (e) => {
+      listDom.addEventListener('scroll', e => {
         if (listDom.scrollTop < listDom.scrollHeight - 100) {
           let len = this.library.year.length
           let lastYear = this.library.year[len - 1]
@@ -698,7 +706,7 @@ export default {
       this.showDay(this.checked.currentMoment)
     },
     setMonth (month) {
-      let mo = (this.library.month.indexOf(month) + 1)
+      let mo = this.library.month.indexOf(month) + 1
       if (mo < 10) {
         mo = '0' + '' + mo
       }
