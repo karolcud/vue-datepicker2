@@ -1,6 +1,9 @@
 # vue-datepicker2
 
-calendar and datepicker component with material design for Vue.js 2.x
+calendar and datepicker component with material design for Vue.js 2.x.
+
+This project is a fork from [vue-datepicker](https://github.com/hilongjw/vue-datepicker)
+to cleanup code and refactor things
 
 ![Screenshot](screenshot.png)
 
