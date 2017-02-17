@@ -14,10 +14,10 @@ to cleanup code and refactor things
 
 # TODO
 
-- [V] Fork project and add suffix `2`
-- [V] Remove legacy code
-- [V] Publish to npm
-- [V] Use `v-model` directive
+- [x] Fork project and add suffix `2`
+- [x] Remove legacy code
+- [x] Publish to npm
+- [x] Use `v-model` directive
 - [ ] Change options to seperated `props`
 - [ ] Code review
 
