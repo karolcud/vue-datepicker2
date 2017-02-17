@@ -315,7 +315,7 @@ table {
   <div class="cov-vue-date" :class="option.wrapperClass ? option.wrapperClass : {}">
     <div class="datepickbox">
       <input type="text" title="input date" class="cov-datepicker" readonly="readonly"
-        :placeholder="option.placeholder" v-model="date.time" :required="required"
+        :placeholder="option.placeholder" v-model="value" :required="required"
         @click="showCheck" @focus="showCheck"
         :style="option.inputStyle ? option.inputStyle : {}"
         :class="option.inputClass ? option.inputClass : {}" />
@@ -714,14 +714,14 @@ export default {
       this.showDay(this.checked.currentMoment)
     },
     showCheck () {
-      if (this.date.time === '') {
+      if (this.value === '') {
         this.showDay()
       } else {
         if (this.option.type === 'day' || this.option.type === 'min') {
-          this.checked.oldtime = this.date.time
-          this.showDay(this.date.time)
+          this.checked.oldtime = this.value
+          this.showDay(this.value)
         } else {
-          this.selectedDays = JSON.parse(this.date.time)
+          this.selectedDays = JSON.parse(this.value)
           if (this.selectedDays.length) {
             this.checked.oldtime = this.selectedDays[0]
             this.showDay(this.selectedDays[0])
@@ -742,15 +742,17 @@ export default {
       }
     },
     picked () {
+      var selected_date
       if (this.option.type === 'day' || this.option.type === 'min') {
         let ctime = this.checked.year + '-' + this.checked.month + '-' + this.checked.day + ' ' + this.checked.hour + ':' + this.checked.min
         this.checked.currentMoment = moment(ctime, 'YYYY-MM-DD HH:mm')
-        this.date.time = moment(this.checked.currentMoment).format(this.option.format)
+        selected_date = moment(this.checked.currentMoment).format(this.option.format)
       } else {
-        this.date.time = JSON.stringify(this.selectedDays)
+        selected_date = JSON.stringify(this.selectedDays)
       }
       this.showInfo.check = false
-      this.$emit('change', this.date.time)
+      this.$emit('input', selected_date)
+      this.$emit('change', selected_date)
     },
     dismiss (evt) {
       if (evt.target.className === 'datepicker-overlay') {
