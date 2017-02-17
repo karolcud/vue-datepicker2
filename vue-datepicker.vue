@@ -71,8 +71,7 @@ import moment from 'moment'
 export default {
   props: {
     required: false,
-    date: {
-      type: Object,
+    value: {
       required: true
     },
     option: {
