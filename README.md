@@ -12,6 +12,15 @@ to cleanup code and refactor things
 - [Vue.js](https://github.com/yyx990803/vue) `^2.0.0`
 - [moment](https://github.com/moment/moment) `^2.11.1`
 
+# TODO
+
+- [V] Fork project and add suffix `2`
+- [V] Remove legacy code
+- [V] Publish to npm
+- [V] Use `v-model` directive
+- [ ] Change options to seperated `props`
+- [ ] Code review
+
 # Installation
 
 ## npm
@@ -29,12 +38,7 @@ import myDatepicker from 'vue-datepicker2'
 export default {
   data () {
     return {
-      startTime: {
-        time: ''
-      },
-      endtime: {
-        time: ''
-      }
+      startTime: '',
 
       option: {
         type: 'day',
@@ -95,7 +99,7 @@ export default {
   <div class="card">
     <div class="row">
       <span>Departure Date：</span>
-      <date-picker :date="startTime" :option="option" :limit="limit"></date-picker>
+      <date-picker v-model="startTime" :option="option" :limit="limit"></date-picker>
     </div>
 
   </div>
