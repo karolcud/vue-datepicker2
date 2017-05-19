@@ -8,7 +8,7 @@
         :class="option.inputClass ? option.inputClass : {}" />
     </div>
     <div class="datepicker-overlay" v-if="showInfo.check" @click="dismiss($event)" v-bind:style="{'background' : option.overlayOpacity? 'rgba(0,0,0,'+option.overlayOpacity+')' : 'rgba(0,0,0,0.5)'}">
-      <div class="cov-date-body" :style="{'background-color': option.color ? option.color.header : '#3f51b5'}">
+      <div class="cov-date-body" :class="option.dateBodyClass ? option.dateBodyClass : {}" :style="{'background-color': option.color ? option.color.header : '#3f51b5'}">
         <div class="cov-date-monthly">
           <div class="cov-date-previous" @click="nextMonth('pre')">«</div>
           <div class="cov-date-caption" :style="{'color': option.color ? option.color.headerText : '#fff'}">
@@ -57,8 +57,8 @@
           </div>
         </div>
         <div class="button-box">
-          <span @click="showInfo.check=false">{{option.buttons? option.buttons.cancel : 'Cancel' }}</span>
-          <span @click="picked">{{option.buttons? option.buttons.ok : 'Ok'}}</span>
+          <span class="button-cancel" @click="showInfo.check=false">{{option.buttons? option.buttons.cancel : 'Cancel' }}</span>
+          <span class="button-ok" @click="picked">{{option.buttons? option.buttons.ok : 'Ok'}}</span>
         </div>
       </div>
     </div>
@@ -90,6 +90,7 @@ export default {
           },
           wrapperClass: '',
           inputClass: '',
+          dateBodyClass:'',
           inputStyle: {
             'display': 'inline-block',
             'padding': '6px',
