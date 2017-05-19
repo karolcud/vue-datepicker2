@@ -87,7 +87,8 @@ export default {
         type: 'fromto',
         from: '2016-02-01',
         to: '2016-02-20'
-      }]
+      }],
+      dateBodyClass: 'date-body'
     }
   },
   components: {
