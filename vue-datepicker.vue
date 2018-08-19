@@ -311,7 +311,8 @@ export default {
         let ctime = this.checked.year + '-' + this.checked.month + '-' + day
         if (obj.checked === true) {
           obj.checked = false
-          this.selectedDays.$remove(ctime)
+          var index = this.selectedDays.indexOf(ctime)
+          this.selectedDays.splice(index, 1)
         } else {
           this.selectedDays.push(ctime)
           obj.checked = true
